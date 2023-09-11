@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.rawgit.com/amanuel/JS-HTML5-QRCode-Generator/master/qrcode.js"></script>
+  <script src="https://cdn.rawgit.com/amanuel/JS-HTML5-QRCode-Generator/master/html5-qrcode.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <style>
+    h1,
+    form,
+    #qrcode {
+      width: 395px;
+      margin: 2rem auto;
+      font: 16px sans-serif;
+    }
+
+    h1 {
+      font-size: 44px;
+    }
+
+    h1,
+    label,
+    button {
+      display: flex;
+      width: 100%;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    label>* {
+      flex: 1;
+    }
+
+    label>span {
+      max-width: 8rem;
+      margin-right: 1rem;
+    }
+
+    @media print {
+      #print {
+        display: none;
+      }
+
+      label,
+      input,
+      select {
+        border: none;
+        background: none;
+        font-size: 24px;
+      }
+    }
+
+    .image {
+      width: 40%;
+    }
+
+    .container {
+      position: relative;
+      text-align: center;
+      color: white;
+    }
+  </style>
+</head>
+
+<body class="container-xl">
+  <div class="d-flex justify-content-center">
+    <img class="image pt-3" src="ICS.png" alt="">
+  </div>
+
+  <h1>WiFi ICS</h1>
+
+  <form id="form">
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="ssid" placeholder="">
+      </div>
+    </div>
+    <div class="form-group row pt-3">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="password" placeholder="">
+      </div>
+
+    </div>
+
+  </form>
+  <div class="d-flex justify-content-center">
+    <button style="width: 450px" type="button" onclick="myFunction()" class="btn btn-primary p-2">generate QR</button>
+
+  </div>
+  <div class="container">
+    <div id="qrcode">
+    </div>
+    <div style="position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%);" id="image_qr">
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button style="width: 450px" type="button" onclick="downloadMyElement()" class="btn btn-primary p-2">download
+      QR</button>
+
+  </div>
+
+</body>
+<script>
+  var qrcode = new QRCode("qrcode");
+  function myFunction() {
+    var ssid = document.getElementById("ssid").value;
+    var pw = document.getElementById("password").value;
+    var qrcode = document.getElementById("qrcode");
+    var text = "WIFI:S:" + ssid + ";T:" + "WPA" + ";P:" + pw + ";H:" + ";";
+    qrcode.replaceChild(showQRCode(text,), qrcode.lastChild);
+    document.getElementById("image_qr").innerHTML = `<img src="ICS.png" style="width: 80px;" alt="">`;
+    // document.getElementById("form").onchange = myFunction;
+  }
+  function downloadMyElement() {
+    var MyElement = document.getElementById('invoice').innerHTML;
+    var filename = "MyElement.html";
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(MyElement));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+
+  }
+</script>
+
+</html>
